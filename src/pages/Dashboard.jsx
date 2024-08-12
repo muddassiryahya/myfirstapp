@@ -8,30 +8,68 @@ function Dashbord() {
     const [name, setName] = useState("Maaz");
 
     const [todos, setTodos] = useState([
-        { value: "Anas" },
-        { value: "Imran" }
+        {
+            value: "Anas",
+            disabled: true
+        },
+        {
+            value: "Imran",
+            disabled: true
+        }
     ]);
     const [value, setValue] = useState("");
 
     const addTodo = () => {
-        setTodos([...todos, { value }]);
+        setTodos([...todos, { value, disabled: true }]);
         setValue("");
     }
 
 
     return (
         <div>
+            <br />
             <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
+
             <br /> <br />
 
             <button onClick={addTodo}>Add Todo</button>
+            <button onClick={() => setTodos([])}>Delete All</button>
 
             <br /> <br />
 
             <ul>
-                {todos.map((v, i) => <li key={i}>{v.value}</li>)}
+                {todos.map((v, i) => <li key={i}>
+
+                    <input
+                        disabled={v.disabled} type="text" defaultValue={v.value}
+                        onChange={(e) => v.value = e.target.value}
+                    />
+
+                    {v.disabled ?
+
+                        <button onClick={() => {
+                            todos.splice(i, 1, { ...v, disabled: false })
+                            setTodos( [...todos] )
+                        }}>Edit</button>
+
+                        :
+
+                        <button onClick={() => {
+                            v.disabled = true;
+                            setTodos([...todos]);
+                        }}>Update</button>
+                    }
+
+
+
+                    <button onClick={() => {
+                        const oldTodos = [...todos];
+                        oldTodos.splice(i, 1)
+                        setTodos(oldTodos)
+                    }}>Delete</button>
+
+                </li>)}
             </ul>
-            <br />
 
             <AppLayout title="SMIT">
                 <div>
