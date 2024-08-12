@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Input from './components/input';
 import BasicCard from './components/MUIcard';
 import Dashbord from './pages/Dashboard';
+import { useState } from 'react'
 
 
 
@@ -14,8 +15,20 @@ function App() {
     console.log("parent...", a);
   };
 
+  const [value, setValue] = useState("")
+
   return (
     <div>
+          
+      <input
+        value={value} onChange={(e) => setValue(e.target.value
+        )} type="text"
+      />
+
+      <h3>{value}</h3>
+      <button onClick={() => setValue("")}>Reset</button>
+
+      <br /><br />
       <Button className='btn' variant="contained">Contained</Button>
       <br />
       <br />
@@ -30,6 +43,9 @@ function App() {
       <br /><br /><br />
 
       <Dashbord />
+
+
+
 
 
     </div>
